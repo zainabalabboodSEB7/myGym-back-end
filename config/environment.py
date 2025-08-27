@@ -1,3 +1,4 @@
+import os
 
-db_URI = "postgresql://dujota@localhost:5432/teas_db_seb7"
-jwt_secret = "kljfabnlkjfdzs"
+db_URI = os.getenv("DB_URI")
+jwt_secret = os.getenv("JWT_SECRET")
