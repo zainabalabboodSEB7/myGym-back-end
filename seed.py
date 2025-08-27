@@ -21,6 +21,10 @@ try:
     print("seeding the database...")
     db = SessionLocal()
 
+ # Seed comments
+    db.add_all(user_list)
+    db.commit()
+
     # Seed teas
     db.add_all(teas_list)
     db.commit()
@@ -29,9 +33,7 @@ try:
     db.add_all(comments_list)
     db.commit()
 
-    # Seed comments
-    db.add_all(user_list)
-    db.commit()
+
 
     db.close()
 
