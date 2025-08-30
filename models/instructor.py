@@ -7,7 +7,7 @@ from .user import UserModel
 
 
 
-class Instructor(BaseModel):
+class InstructorModel(BaseModel):
     __tablename__ = "instructors"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -16,5 +16,5 @@ class Instructor(BaseModel):
 
 
     # Relationships : 
-    user = relationship('UserModel', back_populates='teas')
+    user = relationship('UserModel', back_populates='instructors')
     # Sessions = relationship('SessionModel', back_populates='instructors')
