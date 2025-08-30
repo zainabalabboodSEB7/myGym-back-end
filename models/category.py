@@ -10,4 +10,6 @@ class CategoryModel(BaseModel):
     description = Column(String)
 
     # sessions = relationship("SessionModel", back_populates="category")
+    gym_classes = relationship("GymClassModel", back_populates="category")
+
 
