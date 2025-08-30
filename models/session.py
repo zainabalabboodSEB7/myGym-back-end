@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import BaseModel
 from .user import UserModel
+from .category import CategoryModel
 
 class SessionModel(BaseModel):
 
@@ -10,15 +11,17 @@ class SessionModel(BaseModel):
     id = Column(Integer, primary_key=True, index=True)
 
     # Specific columns 
-    name = Column(String, uniqe=True)
+    name = Column(String, unique=True)
     description = Column(String)
     duration_minutes = Column(Integer)
     capacity = Column(Integer)
 
+    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
+
     # Relationships
-    users = relationship("UserModel", back_populates="sessions")
-    instructor = relationship("InstructorModel", back_populates="sessions")
+    # users = relationship("UserModel", back_populates="sessions")
+    # instructor = relationship("InstructorModel", back_populates="sessions")
     category = relationship("CategoryModel", back_populates="sessions")
-    reviews = relationship("ReviewModel", back_populates= "sessions")
+    # reviews = relationship("ReviewModel", back_populates= "sessions")
 
 

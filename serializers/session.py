@@ -11,9 +11,9 @@ class SessionSchema(BaseModel):
 
     # Relationships
     users: List[UserResponseSchema] = []
-    instructor: InstructorResponseSchema
-    category: CategoryResponseSchema
-    reviews: List[ReviewResopnseSchema]
+    # instructor: InstructorResponseSchema
+    # category: "CategorySchema"
+    # reviews: List[ReviewResopnseSchema]
 
     class Config:
         orm_mode = True
