@@ -103,4 +103,31 @@ def update_session(
 # =====================
 # DELETE (Admin only)
 # =====================
+@router.delete("/categories/{category_id}/sessions/{session_id}")
+def delete_session(
+    category_id:int,
+    session_id: int,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user)
+):
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Only admins can update categories")
 
+    category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
+    
+    if not category: 
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    session = db.query(SessionModel).filter(
+        SessionModel.id == session_id,
+        SessionModel.category_id == category_id).first()
+    
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found in this category")
+    
+    db.delete(session)
+    db.commit()
+    return {"message": f"Session with ID {session_id} has been deleted"}
+
+    
+    
