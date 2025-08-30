@@ -9,7 +9,7 @@ class SessionModel(BaseModel):
     id = Column(Integer, primary_key=True, index=True)
 
     # Specific columns 
-    name = Column(String, unique=True)
+    name = Column(String)
     description = Column(String)
     duration_minutes = Column(Integer)
     capacity = Column(Integer)

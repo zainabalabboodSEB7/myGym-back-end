@@ -26,10 +26,3 @@ class SessionCreateSchema(BaseModel):
     # instructor_id: int
     # category_id: int
 
-class SessionUpdateSchema(BaseModel):
-    name: Optional[str]
-    description: Optional[str]
-    duration_minutes: Optional[int]
-    capacity: Optional[int]
-    # instructor_id: Optional[int]
-    # category_id: Optional[int]
