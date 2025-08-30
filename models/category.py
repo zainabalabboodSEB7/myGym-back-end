@@ -9,5 +9,6 @@ class CategoryModel(BaseModel):
     name = Column(String, unique=True)
     description = Column(String)
 
-    # sessions = relationship("SessionModel", back_populates="category")
+    sessions = relationship("SessionModel", back_populates="category", cascade="all, delete")
+
 
