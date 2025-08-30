@@ -1,4 +1,4 @@
-from models.instructor import InstructorModel  
+from models.instructor import InstructorModel
 
 instructors_list = [
     InstructorModel(name="Alice Johnson", user_id=1),
