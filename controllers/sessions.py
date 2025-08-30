@@ -22,7 +22,7 @@ def get_sessions(category_id: int, db: Session = Depends(get_db)):
 
     return category.sessions
 
-@router.get("categories/{category_id}/sessions/{session_id}")
+@router.get("categories/{category_id}/sessions/{session_id}", response_model=SessionSchema)
 def get_single_session(category_id:int, session_id: int, db: Session = Depends(get_db)):
     category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
 
@@ -42,6 +42,29 @@ def get_single_session(category_id:int, session_id: int, db: Session = Depends(g
 # =====================
 # CREATE (Admin only)
 # =====================
+@router.post("/categories/{category_id}/sessions", response_model=SessionSchema)
+def create_session(
+    session: SessionCreateSchema,
+    category_id: int, 
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user)
+    ):
+     
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Only admins can create categories")
+    
+    category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+    new_session = SessionModel(**session.dict(), category_id=category_id)
+    db.add(new_session)
+    db.commit()
+    db.refresh(new_session)
+    return new_session
+
+
+
 
 
 # =====================

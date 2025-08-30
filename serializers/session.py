@@ -21,9 +21,9 @@ class SessionSchema(BaseModel):
 class SessionCreateSchema(BaseModel):
     name: str
     description: str
-    duration_minutes: str
-    capacity: str
-    instructor_id: int
+    duration_minutes: int
+    capacity: int
+    # instructor_id: int
     # category_id: int
 
 class SessionUpdateSchema(BaseModel):
@@ -31,5 +31,5 @@ class SessionUpdateSchema(BaseModel):
     description: Optional[str]
     duration_minutes: Optional[int]
     capacity: Optional[int]
-    instructor_id: Optional[int]
+    # instructor_id: Optional[int]
     # category_id: Optional[int]
