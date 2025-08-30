@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
-# from .session import SessionSchema
+from .session import SessionSchema
 
 
 class CategorySchema(BaseModel):

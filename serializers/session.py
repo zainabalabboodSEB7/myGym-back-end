@@ -6,8 +6,8 @@ class SessionSchema(BaseModel):
     id: Optional[int] = Field(default=None)
     name: str
     description: str
-    duration_minutes: str
-    capacity: str
+    duration_minutes: int
+    capacity: int
 
     # Relationships
     users: List[UserResponseSchema] = []
@@ -24,7 +24,7 @@ class SessionCreateSchema(BaseModel):
     duration_minutes: str
     capacity: str
     instructor_id: int
-    category_id: int
+    # category_id: int
 
 class SessionUpdateSchema(BaseModel):
     name: Optional[str]
@@ -32,4 +32,4 @@ class SessionUpdateSchema(BaseModel):
     duration_minutes: Optional[int]
     capacity: Optional[int]
     instructor_id: Optional[int]
-    category_id: Optional[int]
+    # category_id: Optional[int]

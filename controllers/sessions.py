@@ -16,7 +16,7 @@ router = APIRouter()
 # =====================
 @router.get("/categories/{category_id}/sessions", response_model=List[SessionSchema])
 def get_sessions(category_id: int, db: Session = Depends(get_db)):
-    category = db.query(CategoryModel).filter(CategoryModel.id == category_id).all()
+    category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
 

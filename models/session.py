@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import BaseModel
-from .user import UserModel
-from .category import CategoryModel
 
 class SessionModel(BaseModel):
 
