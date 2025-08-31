@@ -1,0 +1,14 @@
+               List of relations
+ Schema |       Name        |   Type   | Owner 
+--------+-------------------+----------+-------
+ public | alembic_version   | table    | saraj
+ public | categories        | table    | saraj
+ public | categories_id_seq | sequence | saraj
+ public | reviews           | table    | saraj
+ public | reviews_id_seq    | sequence | saraj
+ public | sessions          | table    | saraj
+ public | sessions_id_seq   | sequence | saraj
+ public | users             | table    | saraj
+ public | users_id_seq      | sequence | saraj
+(9 rows)
+
