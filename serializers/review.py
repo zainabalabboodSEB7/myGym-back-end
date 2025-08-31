@@ -6,7 +6,15 @@ class ReviewSchema(BaseModel):
     id: Optional[int] = Field(default=None)
     content: str
     rating: int
-    # session_id: int
+    user_id: int
+    session_id: int
 
+    class Config:
+        orm_mode = True
+
+class ReviewCreateSchema(BaseModel):
+    content: str
+    rating: int
+    
     class Config:
         orm_mode = True
