@@ -4,9 +4,13 @@ from typing import List
 
 from models.session import SessionModel
 from models.category import CategoryModel
+from models.user import UserModel
 from models.review import ReviewModel
-from serializers.review import ReviewSchema
+from serializers.review import ReviewSchema, ReviewCreateSchema
 from database import get_db
+
+from dependencies.get_current_user import get_current_user
+
 
 router = APIRouter()
 
@@ -16,12 +20,11 @@ router = APIRouter()
 # =====================
 @router.get("/categories/{category_id}/sessions/{session_id}/reviews", response_model=List[ReviewSchema])
 def get_session_reviews(category_id: int, session_id: int, db: Session = Depends(get_db)):
-    # check if category exists
+   
     category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
 
-    # check if session exists inside this category
     session = (
         db.query(SessionModel)
         .filter(SessionModel.id == session_id, SessionModel.category_id == category_id)
@@ -30,18 +33,22 @@ def get_session_reviews(category_id: int, session_id: int, db: Session = Depends
     if not session:
         raise HTTPException(status_code=404, detail="Session not found in this category")
 
-    # return reviews for that session
     return session.reviews
 
 @router.get("/categories/{category_id}/sessions/{session_id}/reviews/{review_id}", response_model=ReviewSchema)
-def get_session_reviews(category_id: int, session_id: int, review_id:int, db: Session = Depends(get_db)):
-    # check if category exists
+def get_session_reviews(
+    category_id: int, 
+    session_id: int, 
+    review_id:int, 
+    db: Session = Depends(get_db)
+    ):
+    
     category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
 
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
 
-    # check if session exists inside this category
+    
     session = (
         db.query(SessionModel)
         .filter(SessionModel.id == session_id, SessionModel.category_id == category_id)
@@ -58,8 +65,44 @@ def get_session_reviews(category_id: int, session_id: int, review_id:int, db: Se
     if not review:
         raise HTTPException(status_code=404, detail="Review not found in this session")
 
-    # return reviews for that session
     return review
+
+# =====================
+# CREATE 
+# =====================
+@router.post(
+    "/categories/{category_id}/sessions/{session_id}/reviews",
+    response_model=ReviewSchema,
+)
+def create_review(
+    review: ReviewCreateSchema,
+    category_id: int,
+    session_id: int,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user) # ensures only logged-in users
+):
+    
+    category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    # Check if session exists in this category
+    session = (
+        db.query(SessionModel)
+        .filter(SessionModel.id == session_id, SessionModel.category_id == category_id)
+        .first()
+    )
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found in this category")
+
+    # Create the review
+    new_review = ReviewModel(**review.dict(), user_id= current_user.id, session_id=session_id)
+
+    db.add(new_review)
+    db.commit()
+    db.refresh(new_review)
+
+    return new_review
 
 
 
