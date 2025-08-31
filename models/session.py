@@ -21,5 +21,6 @@ class SessionModel(BaseModel):
     # instructor = relationship("InstructorModel", back_populates="sessions")
     category = relationship("CategoryModel", back_populates="sessions")
     # reviews = relationship("ReviewModel", back_populates= "sessions")
+    reviews = relationship("ReviewModel", back_populates="session", cascade="all, delete-orphan")
 
 

@@ -5,6 +5,7 @@ from data.tea_data import teas_list, comments_list
 from data.user_data import user_list
 from data.category_data import categories_list
 from data.session_data import sessions_list
+from data.review_data import reviews_list
 from config.environment import db_URI
 from sqlalchemy import create_engine
 from models.base import Base
@@ -32,6 +33,9 @@ try:
     db.commit()
 
     db.add_all(sessions_list)
+    db.commit()
+
+    db.add_all(reviews_list)
     db.commit()
 
     # # Seed comments

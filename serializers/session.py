@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from .user import UserResponseSchema
+from .review import ReviewSchema
 
 class SessionSchema(BaseModel):
     id: Optional[int] = Field(default=None)
@@ -13,7 +14,7 @@ class SessionSchema(BaseModel):
     users: List[UserResponseSchema] = []
     # instructor: InstructorResponseSchema
     # category: "CategorySchema"
-    # reviews: List[ReviewResopnseSchema]
+    reviews: List[ReviewSchema] = []
 
     class Config:
         orm_mode = True
