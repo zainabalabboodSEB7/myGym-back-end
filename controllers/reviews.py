@@ -79,14 +79,13 @@ def create_review(
     category_id: int,
     session_id: int,
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_user) # ensures only logged-in users
+    current_user: UserModel = Depends(get_current_user) 
 ):
     
     category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
 
-    # Check if session exists in this category
     session = (
         db.query(SessionModel)
         .filter(SessionModel.id == session_id, SessionModel.category_id == category_id)
@@ -95,7 +94,6 @@ def create_review(
     if not session:
         raise HTTPException(status_code=404, detail="Session not found in this category")
 
-    # Create the review
     new_review = ReviewModel(**review.dict(), user_id= current_user.id, session_id=session_id)
 
     db.add(new_review)
