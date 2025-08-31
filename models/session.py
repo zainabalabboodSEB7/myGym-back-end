@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from .base import BaseModel
+from datetime import datetime  
 
 class SessionModel(BaseModel):
 
@@ -13,8 +14,10 @@ class SessionModel(BaseModel):
     description = Column(String)
     duration_minutes = Column(Integer)
     capacity = Column(Integer)
-
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
+    start_time = Column(DateTime)
+    end_time = Column(DateTime)
+
 
     # Relationships
     # users = relationship("UserModel", back_populates="sessions")
