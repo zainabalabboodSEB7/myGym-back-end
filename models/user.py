@@ -20,8 +20,6 @@ class UserModel(BaseModel):
     is_admin = Column(Boolean, default=False)
     reviews = relationship("ReviewModel", back_populates="user")
 
-    teas = relationship('TeaModel', back_populates='user')
-
     # Auth Methods
 
     def set_password(self, password: str):

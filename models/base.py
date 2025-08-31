@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-#  TeaModel extends SQLAlchemy's Base class.
 #  Extending Base lets SQLAlchemy 'know' about our model, so it can use it.
 
 class BaseModel(Base):

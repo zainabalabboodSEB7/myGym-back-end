@@ -1,3 +1,32 @@
-.pytest_cache
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Environment variables
 .env
-test.db
+*.env
+
+# Database files
+*.sqlite3
+*.db
+
+# IDE-specific files (e.g., VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Uploaded files or media (if applicable)
+media/
+uploads/
+
+# Test-related files (if applicable)
+.pytest_cache/

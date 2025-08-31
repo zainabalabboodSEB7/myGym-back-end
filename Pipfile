@@ -13,6 +13,7 @@ passlib = "*"
 bcrypt = "*"
 pyjwt = "*"
 python-dotenv = "*"
+alembic = "*"
 
 [dev-packages]
 pytest = "*"

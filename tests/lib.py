@@ -1,17 +1,15 @@
-# tests/lib.py
-
 from fastapi.testclient import TestClient
-from data.tea_data import teas_list, comments_list
+# from data.tea_data import teas_list, comments_list
 from data.user_data import user_list
 
 def seed_db(db):
     db.commit()
     db.add_all(user_list)
     db.commit()
-    db.add_all(teas_list)
-    db.commit()
-    db.add_all(comments_list)
-    db.commit()
+    # db.add_all(teas_list)
+    # db.commit()
+    # db.add_all(comments_list)
+    # db.commit()
 
 def login(test_app: TestClient, username: str, password: str):
     # Log in using an existing mock user
