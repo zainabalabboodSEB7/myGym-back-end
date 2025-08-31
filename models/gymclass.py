@@ -1,6 +1,12 @@
 
+from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey
 
-class GymClassModel(Base):
+from sqlalchemy.orm import relationship
+from .base import BaseModel
+from datetime import datetime  
+
+
+class GymClassModel(BaseModel):
     __tablename__ = "gym_classes"
 
     id = Column(Integer, primary_key=True, index=True)
