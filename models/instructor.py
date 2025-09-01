@@ -3,9 +3,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import BaseModel
 from .user import UserModel
-# from .session import SessionModel
-
-
 
 class InstructorModel(BaseModel):
     __tablename__ = "instructors"
@@ -17,4 +14,4 @@ class InstructorModel(BaseModel):
 
     # Relationships : 
     user = relationship('UserModel', back_populates='instructors')
-    # Sessions = relationship('SessionModel', back_populates='instructors')
+    categories = relationship("CategoryModel", back_populates="instructor")

@@ -19,6 +19,8 @@ class UserModel(BaseModel):
     password_hash = Column(String, nullable=True)
     is_admin = Column(Boolean, default=False)
     reviews = relationship("ReviewModel", back_populates="user")
+    instructors = relationship("InstructorModel", back_populates="user")  # <-- Add here
+
 
     teas = relationship('TeaModel', back_populates='user')
 
