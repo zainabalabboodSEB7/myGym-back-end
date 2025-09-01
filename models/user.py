@@ -36,7 +36,8 @@ class UserModel(BaseModel):
             "exp": datetime.now(timezone.utc) + timedelta(days=1),  # Expiration time (1 day)
             "iat": datetime.now(timezone.utc),  # Issued at time
             "sub": str(self.id),  # Subject - the user ID
-            "username": self.username
+            "username": self.username,
+            "is_admin": self.is_admin
         }
 
         # Create the JWT token
