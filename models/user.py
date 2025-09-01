@@ -14,11 +14,11 @@ class UserModel(BaseModel):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True)  # Each username must be unique
+    username = Column(String, unique=True, nullable=False)  # Each username must be unique
     email = Column(String, unique=True)  # Each email must be unique
     password_hash = Column(String, nullable=True)
     is_admin = Column(Boolean, default=False)
-    reviews = relationship("ReviewModel", back_populates="user")
+    reviews = relationship("ReviewModel", back_populates="user", cascade="all, delete")
 
     teas = relationship('TeaModel', back_populates='user')
 

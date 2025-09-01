@@ -10,7 +10,7 @@ class SessionModel(BaseModel):
     id = Column(Integer, primary_key=True, index=True)
 
     # Specific columns 
-    name = Column(String)
+    name = Column(String, nullable=False)
     description = Column(String)
     duration_minutes = Column(Integer)
     capacity = Column(Integer)
@@ -24,6 +24,6 @@ class SessionModel(BaseModel):
     # instructor = relationship("InstructorModel", back_populates="sessions")
     category = relationship("CategoryModel", back_populates="sessions")
     # reviews = relationship("ReviewModel", back_populates= "sessions")
-    reviews = relationship("ReviewModel", back_populates="session", cascade="all, delete-orphan")
+    reviews = relationship("ReviewModel", back_populates="session", cascade="all, delete")
 
 

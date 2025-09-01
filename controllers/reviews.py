@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from typing import List
-
+from fastapi import status
 from models.session import SessionModel
 from models.category import CategoryModel
 from models.user import UserModel
@@ -36,7 +36,7 @@ def get_session_reviews(category_id: int, session_id: int, db: Session = Depends
     return session.reviews
 
 @router.get("/categories/{category_id}/sessions/{session_id}/reviews/{review_id}", response_model=ReviewSchema)
-def get_session_reviews(
+def get_single_review(
     category_id: int, 
     session_id: int, 
     review_id:int, 
@@ -103,4 +103,62 @@ def create_review(
     return new_review
 
 
+@router.put(
+    "/categories/{category_id}/sessions/{session_id}/reviews/{review_id}",
+    response_model=ReviewSchema,
+)
+def update_review(
+    review_id: int,
+    review_data: ReviewCreateSchema,
+    category_id: int,
+    session_id: int,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user)
+):
+    review = db.query(ReviewModel).filter(
+        ReviewModel.id == review_id,
+        ReviewModel.session_id == session_id
+    ).first()
 
+    if not review:
+        raise HTTPException(status_code=404, detail="Review not found")
+
+    if review.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to edit this review")
+
+    review.content = review_data.content
+    review.rating = review_data.rating
+    db.commit()
+    db.refresh(review)
+
+    return review
+
+
+# =====================
+# DELETE
+# =====================
+@router.delete(
+    "/categories/{category_id}/sessions/{session_id}/reviews/{review_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+def delete_review(
+    review_id: int,
+    category_id: int,
+    session_id: int,
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user)
+):
+    review = db.query(ReviewModel).filter(
+        ReviewModel.id == review_id,
+        ReviewModel.session_id == session_id
+    ).first()
+
+    if not review:
+        raise HTTPException(status_code=404, detail="Review not found")
+
+    if review.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to delete this review")
+
+    db.delete(review)
+    db.commit()
+    return None
