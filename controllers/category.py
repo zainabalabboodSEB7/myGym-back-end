@@ -48,6 +48,7 @@ def create_category(
     db.refresh(new_category)
     return new_category
 
+
 # -----------------------
 # UPDATE category (admin only)
 # -----------------------
@@ -58,20 +59,20 @@ def update_category(
     db: Session = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
-    if not db_category:
-        raise HTTPException(status_code=404, detail="Category not found")
-
     if not current_user.is_admin:
         raise HTTPException(status_code=403, detail="Only admins can update categories")
 
-    category_data = category.dict(exclude_unset=True)
-    for key, value in category_data.items():
-        setattr(db_category, key, value)
+    existing_category = db.query(CategoryModel).filter(CategoryModel.id == category_id).first()
+    if not existing_category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    for key, value in category.dict().items():
+        setattr(existing_category, key, value)
 
     db.commit()
-    db.refresh(db_category)
-    return db_category
+    db.refresh(existing_category)
+    return existing_category
+
 
 # -----------------------
 # DELETE category (admin only)

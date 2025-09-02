@@ -6,6 +6,8 @@ from data.user_data import user_list
 from data.category_data import categories_list
 from data.session_data import sessions_list
 from data.review_data import reviews_list
+from data.instructor_data import instructors_list
+
 from config.environment import db_URI
 from sqlalchemy import create_engine
 from models.base import Base
@@ -29,6 +31,9 @@ try:
     db.commit()
 
     # Seed teas
+    db.add_all(instructors_list)
+    db.commit()
+    
     db.add_all(categories_list)
     db.commit()
 
@@ -37,6 +42,7 @@ try:
 
     db.add_all(reviews_list)
     db.commit()
+
 
     # # Seed comments
     # db.add_all(comments_list)

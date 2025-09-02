@@ -9,6 +9,7 @@ from controllers.users import router as UsersRouter
 from controllers.category import router as CategoryRouter
 from controllers.sessions import router as SessionRouter
 from controllers.reviews import router as ReviewRouter
+from controllers.instructors import router as InstructorRouter
 
 app = FastAPI()
 
@@ -33,6 +34,7 @@ app.include_router(TeasRouter, prefix='/api')
 app.include_router(CommentsRouter, prefix='/api')
 app.include_router(UsersRouter, prefix='/api')
 app.include_router(CategoryRouter, prefix='/api')
+app.include_router(InstructorRouter, prefix="/api")
 app.include_router(SessionRouter, prefix='/api')
 app.include_router(ReviewRouter, prefix='/api')
 
